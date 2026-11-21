@@ -2,13 +2,13 @@ import { copyFileSync, existsSync, mkdirSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 
-const here = dirname(fileURLToPath(import.meta.url));
-const outDir = process.env.MAKEFUN_OUTPUT_DIR || "/output";
-const entryPath = join(here, "entry.txt");
+const __dirname = dirname(fileURLToPath(import.meta.url));
+const outputDir = process.env.MAKEFUN_OUTPUT_DIR ?? "/output";
 
-if (!existsSync(entryPath)) {
-  throw new Error("entry.txt not found next to main.ts");
+const inputPath = join(__dirname, "entry.png");
+if (!existsSync(inputPath)) {
+  throw new Error(`entry.png not found at ${inputPath}`);
 }
 
-mkdirSync(outDir, { recursive: true });
-copyFileSync(entryPath, join(outDir, "entry.txt"));
+mkdirSync(outputDir, { recursive: true });
+copyFileSync(inputPath, join(outputDir, "entry.png"));
